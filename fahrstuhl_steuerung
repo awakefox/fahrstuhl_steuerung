@@ -1,1 +1,104 @@
-test
+#include <Servo.h>
+#include <Button.h>
+
+int stock1 = 8;
+int stock2 = 9;
+int stock3 = 10;
+Button knopf_runter = Button(2,PULLUP);
+Button knopf_hoch = Button(3,PULLUP);
+Servo motor_kabine;
+Servo motor_tuer;
+
+int aktueller_stock = 2;
+
+
+void setup(){
+  Serial.begin(9600);
+  pinMode(stock1, OUTPUT);
+  pinMode(stock2, OUTPUT);
+  pinMode(stock3, OUTPUT);
+  motor_kabine.attach(4);
+  motor_tuer.attach(5);
+}
+
+void loop(){
+  if(aktueller_stock == 1 && knopf_runter.isPressed()){
+    delay(1000);
+    motor_kabine.write(10);
+    digitalWrite(stock1,HIGH);
+    digitalWrite(stock2,LOW);
+    digitalWrite(stock3,LOW);
+    Serial.println(" Sie befinden sich bereits im ersten Stock ");
+    delay(1000);
+    motor_tuer.write(60);
+    delay(5000);
+    motor_tuer.write(10);
+    aktueller_stock = 1;
+    
+  }else if(aktueller_stock == 1 && knopf_hoch.isPressed()){
+    delay(1000);
+    motor_kabine.write(55);
+    digitalWrite(stock1,LOW);
+    digitalWrite(stock2,HIGH);
+    digitalWrite(stock3,LOW);
+    Serial.println(" Sie befinden sich im zweiten Stock ");
+    delay(1000);
+    motor_tuer.write(60);
+    delay(5000);
+    motor_tuer.write(10);
+    aktueller_stock = 2;
+    
+  }else if(aktueller_stock == 2 && knopf_runter.isPressed()){
+    delay(1000);
+    motor_kabine.write(10);
+    digitalWrite(stock1,HIGH);
+    digitalWrite(stock2,LOW);
+    digitalWrite(stock3,LOW);
+    Serial.println(" Sie befinden sich im ersten Stock ");
+    delay(1000);
+    motor_tuer.write(60);
+    delay(5000);
+    motor_tuer.write(10);
+    aktueller_stock = 1;
+    
+  }else if(aktueller_stock == 2 && knopf_hoch.isPressed()){
+    delay(1000);
+    motor_kabine.write(120);
+    digitalWrite(stock1,LOW);
+    digitalWrite(stock2,LOW);
+    digitalWrite(stock3,HIGH);
+    Serial.println(" Sie befinden sich im dritten Stock ");
+    delay(1000);
+    motor_tuer.write(60);
+    delay(5000);
+    motor_tuer.write(10);
+    aktueller_stock = 3;
+    
+  }else if(aktueller_stock == 3 && knopf_runter.isPressed()){
+    delay(1000);
+    motor_kabine.write(55);
+    digitalWrite(stock1,LOW);
+    digitalWrite(stock2,HIGH);
+    digitalWrite(stock3,LOW);
+    Serial.println(" Sie befinden sich im zweiten Stock ");
+    delay(1000);
+    motor_tuer.write(60);
+    delay(5000);
+    motor_tuer.write(10);
+    aktueller_stock = 2;
+    
+  }else if(aktueller_stock == 3 && knopf_hoch.isPressed()){
+    delay(1000);
+    motor_kabine.write(10);
+    digitalWrite(stock1,LOW);
+    digitalWrite(stock2,LOW);
+    digitalWrite(stock3,HIGH);
+    Serial.println(" Sie befinden sich bereits im dritten Stock ");
+    delay(1000);
+    motor_tuer.write(60);
+    delay(5000);
+    motor_tuer.write(10);
+    aktueller_stock = 3;
+  }
+}
+  
